@@ -1,0 +1,129 @@
+*{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+body{
+    background-color: #dcE8f4;
+}
+.header{
+      display: grid;
+      grid-template-columns: 2fr 2fr 1fr;
+}
+i{ 
+    margin-top: 1rem;
+    padding-left: 4rem;
+    font-size: 1rem;
+    padding-bottom: 2rem;
+    text-align: center;    
+ }
+ .image-display{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+ }
+ img{
+     height: 20rem;
+     width: 40rem;
+     margin: auto ;
+     padding: auto;
+     display: block;
+ }
+ p{
+     margin-top: 1em;
+     text-align: center;
+     font-size: 1.2rem;
+     color: #a385E2;
+ }
+ h5{margin-top: 0.5em;
+     text-align: center;
+    color: #f2a3f2;
+ }
+ /*footer*/
+a{
+    text-decoration-line: none;
+    color: black;
+    font-size: 1rem;
+}
+li{
+    list-style-type: none;
+}
+.footer-link{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+}
+/*responsive*/
+@media screen and (max-width: 1200px) {
+    
+    /*header*/
+
+ i{
+    margin-top: 1rem;
+    padding-left: 0.2em;
+    font-size: 1rem;
+    padding-bottom: 2rem;
+    text-align: center;
+ }
+ /*footer*/
+a{
+    text-decoration-line: none;
+    color: black;
+    font-size: 1rem;
+    text-align: center;
+}
+li{
+    list-style-type: none;
+}
+.footer-link{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+.image-display{
+    display: grid;
+    grid-template-columns: 1fr;
+ }
+ img{
+    height: 20rem;
+    width: 30rem;
+    margin: auto ;
+    padding: auto;
+    display: block;
+}
+}
+@media screen and (min-width: 800px) and  (max-width:1800px) {
+    i{
+        margin-top: 1rem;
+        padding-left: 1.5em;
+        font-size: 1rem;
+        padding-bottom: 2rem;
+        text-align: center;
+     }
+     .image-display{
+        display: grid;
+        grid-template-columns: 1fr;
+     }
+     img{
+        height: 20rem;
+        width: 30rem;
+        margin: auto ;
+        padding: auto;
+        display: block;
+    }
+    .nav{
+        display: block;
+        margin-top:8rem;
+        margin-left: 0.5em;;
+        font-size: 1rem;
+        color:white;
+        text-decoration-line: none;
+        text-align: right;
+        padding-right: 2rem;
+     }
+     }
+     @media screen and (min-width:300px) and (max-width: 600px) {
+        .nav{
+            margin-top:8rem;
+            margin-left: 2em;;
+            font-size: 2rem;
+            color:white;
+            text-decoration-line: none;
+            text-align: right;
+         }
+     }
