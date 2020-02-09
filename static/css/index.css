@@ -419,10 +419,18 @@ li {
     height: 20%;
 }
 
+.rating-view {
+    height: 4rem;
+    width: 4rem;
+    border-radius: 70%;
+    border-width: medium;
+    float: left;
+}
+
 .button {
     border-radius: 4px;
     background-image: linear-gradient(to right, var(--blue), var(--aqua));
-    color: var(--white);
+    color: var(--black);
     border: none;
     text-align: center;
     font-size: 1em;
