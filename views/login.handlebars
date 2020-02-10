@@ -1,6 +1,13 @@
 <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
 
-<form method="POST" style="border:2px solid #ccc">
+{{#each messages}}
+
+    <div class="errors">{{this}}</div>
+
+{{/each}}
+
+
+<form method="POST"  action="/sendMessage" style="border:2px solid #ccc">
   <div class="container">
     <h1><br><br>Login</h1>
     <hr>

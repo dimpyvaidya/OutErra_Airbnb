@@ -1,10 +1,13 @@
 <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
+<br><br><br><br>
 
 {{#each messages}}
 
-<div class="errors">{{this}}</div>
+    <div class="errors">{{this}}</div>
 
 {{/each}}
+
+
 
 <form  method="POST" action="/sendMessage">
   <div class="container">
