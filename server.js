@@ -148,10 +148,6 @@ app.post("/sendMessage", (req, res) => {
         errors.push("Sorry, you must enter a Password");
     }
 
-    // if (req.body.uname == "") {
-    //     errors.push("Sorry, you must enter your User name");
-    // }
-
     if (errors.length > 0) {
         res.render("userregistration", {
             messages: errors
@@ -163,8 +159,7 @@ app.post("/sendMessage", (req, res) => {
 
         client.messages
             .create({
-                body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!! ,
-                // Message :${req.body.message}`,
+                body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!!`,
                 from: '+12012317349',
                 to: `${req.body.phoneNo}`
             })

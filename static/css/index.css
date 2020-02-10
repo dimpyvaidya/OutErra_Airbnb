@@ -469,7 +469,7 @@ li {
 
 /*For tablet view*/
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 925px) {
     .header {
         padding: 0 0 25em 0;
     }
