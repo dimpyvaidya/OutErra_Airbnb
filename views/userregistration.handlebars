@@ -1,13 +1,12 @@
 <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
 <br><br><br><br>
 
-{{#each messages}}
 
-    <div class="errors">{{this}}</div>
+ {{#each messages}}
+<li><i class="material-icons" style="color: red; position: relative; text-align:center">error</i>
+    {{this}}</li>
 
-{{/each}}
-
-
+{{/each}} 
 
 <form  method="POST" action="/sendMessage">
   <div class="container">
@@ -37,8 +36,8 @@
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw">
 
-    <label for="psw-confirm"><b>Confirm Password</b></label>
-    <input type="password" placeholder="Confirm Password" name="psw-confirm">
+    <label for="pswConfirm"><b>Confirm Password</b></label>
+    <input type="password" placeholder="Confirm Password" name="pswConfirm">
 
     <div>
       <label>

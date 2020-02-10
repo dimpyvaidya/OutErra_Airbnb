@@ -1,11 +1,10 @@
 <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
 
-{{#each messages}}
+ {{#each messages}}
+<li><i class="material-icons" style="color: red; position: relative; text-align:center">error</i>
+    {{this}}</li>
 
-    <div class="errors">{{this}}</div>
-
-{{/each}}
-
+{{/each}} 
 
 <form method="POST"  action="/sendMessage" style="border:2px solid #ccc">
   <div class="container">
@@ -19,8 +18,8 @@
     <input type="password" placeholder="Enter Password" name="psw">
 
     <div class="clearfix">
-      <button type="button" class="signupbtn">Login</button>
-      <button type="submit" class="cancelbtn"><a href="/home">Cancel</a></button><br>
+      <button type="submit" class="signupbtn">Login</button>
+      <button type="button" class="cancelbtn"><a href="/home">Cancel</a></button><br>
       <h3 class="statement">Don't have an account? <a href="/userregistration" style="color:dodgerblue">Sign Up</a></h3>
       <br><br>
     </div>

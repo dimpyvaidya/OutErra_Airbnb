@@ -123,31 +123,36 @@ app.get("/sendMessage", (req, res) => {
 app.post("/sendMessage", (req, res) => {
     const errors = [];
     if (req.body.Name == "") {
-        errors.push("Sorry, you must enter your Name");
+        errors.push("Please enter your Name");
     }
     if (req.body.Address == "") {
-        errors.push("Sorry, you must enter your Address");
+        errors.push("Please enter your Address");
     }
 
     if (req.body.City == "") {
-        errors.push("Sorry, you must enter your City");
+        errors.push("Please enter your City");
     }
     if (req.body.State == "") {
-        errors.push("Sorry, you must enter your State");
+        errors.push("Please enter your State");
     }
     if (req.body.PostalCode == "") {
-        errors.push("Sorry, you must enter your Postal Code");
+        errors.push("Please enter your Postal Code");
     }
     if (req.body.phoneNo == "") {
-        errors.push("Sorry, you must enter your phone number");
+        errors.push("Please enter your phone number");
     }
     if (req.body.email == "") {
-        errors.push("Sorry, you must enter your  E-mail address");
+        errors.push("Please enter your  E-mail address");
     }
     if (req.body.psw == "") {
-        errors.push("Sorry, you must enter a Password");
+        errors.push("Please enter a Password");
     }
-
+    if (req.body.pswConfirm == "") {
+        errors.push("Please enter a Password");
+    }
+    if (req.body.uname == "") {
+        errors.push("Please enter a Username");
+    }
     if (errors.length > 0) {
         res.render("userregistration", {
             messages: errors
@@ -170,7 +175,6 @@ app.post("/sendMessage", (req, res) => {
             .catch((err) => {
                 console.log(`Error ${err}`);
             })
-
     }
 });
 
