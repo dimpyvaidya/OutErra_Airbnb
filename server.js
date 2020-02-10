@@ -148,7 +148,7 @@ app.post("/sendMessage", (req, res) => {
         errors.push("Please enter a Password");
     }
     if (req.body.pswConfirm == "") {
-        errors.push("Please enter a Password");
+        errors.push("Please reenter your Password");
     }
     if (req.body.psw != req.body.pswConfirm) {
         errors.push("Your password and confirm password must match!");
