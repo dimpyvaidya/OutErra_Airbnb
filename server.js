@@ -8,7 +8,6 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 app.get("/", (req, res) => {
-
     res.render('home', {
         title: "Home",
         headingInfo: "Home Page",
@@ -112,13 +111,11 @@ app.get("/login", (req, res) => {
     });
 });
 
-
 //Registration page validation
 app.get("/sendMessage", (req, res) => {
     res.render("userregistration", {
         title: "SMS Page"
     });
-
 });
 
 app.post("/sendMessage", (req, res) => {
@@ -129,7 +126,6 @@ app.post("/sendMessage", (req, res) => {
     if (req.body.Address == "") {
         errors.push("Please enter your Address");
     }
-
     if (req.body.City == "") {
         errors.push("Please enter your City");
     }
@@ -190,7 +186,6 @@ app.get("/sendMessageLogin", (req, res) => {
     res.render("login", {
         title: "SMS Page"
     });
-
 });
 
 app.post("/sendMessageLogin", (req, res) => {
@@ -198,7 +193,6 @@ app.post("/sendMessageLogin", (req, res) => {
     if (req.body.uname == "") {
         error.push("Please enter your Username");
     }
-
     if (req.body.psw == "") {
         error.push("Please enter your Password");
     }
@@ -207,7 +201,6 @@ app.post("/sendMessageLogin", (req, res) => {
             messages: error
         })
     }
-
 });
 
 app.listen(3000, () => {
