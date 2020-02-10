@@ -113,6 +113,7 @@ app.get("/login", (req, res) => {
 });
 
 
+//Registration page validation
 app.get("/sendMessage", (req, res) => {
     res.render("userregistration", {
         title: "SMS Page"
@@ -141,6 +142,9 @@ app.post("/sendMessage", (req, res) => {
     if (req.body.phoneNo == "") {
         errors.push("Please enter your phone number");
     }
+    if (req.body.phoneNo != "/^\d{10}$/") {
+        errors.push("Please enter your valid 10-digit Phone Number");
+    }
     if (req.body.email == "") {
         errors.push("Please enter your  E-mail address");
     }
@@ -149,6 +153,9 @@ app.post("/sendMessage", (req, res) => {
     }
     if (req.body.pswConfirm == "") {
         errors.push("Please enter a Password");
+    }
+    if (req.body.psw != req.body.pswConfirm) {
+        errors.push("Your password and confirm password must match!");
     }
     if (req.body.uname == "") {
         errors.push("Please enter a Username");
