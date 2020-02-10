@@ -185,6 +185,31 @@ app.post("/sendMessage", (req, res) => {
     }
 });
 
+//Login page validation
+app.get("/sendMessageLogin", (req, res) => {
+    res.render("login", {
+        title: "SMS Page"
+    });
+
+});
+
+app.post("/sendMessageLogin", (req, res) => {
+    const error = [];
+    if (req.body.uname == "") {
+        error.push("Please enter your Username");
+    }
+
+    if (req.body.psw == "") {
+        error.push("Please enter your Password");
+    }
+    if (error.length > 0) {
+        res.render("login", {
+            messages: error
+        })
+    }
+
+});
+
 app.listen(3000, () => {
     console.log(`Web server is running`);
 })
