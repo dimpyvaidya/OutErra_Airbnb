@@ -138,9 +138,10 @@ app.post("/sendMessage", (req, res) => {
     if (req.body.phoneNo == "") {
         errors.push("Please enter your phone number");
     }
-    if (req.body.phoneNo != "/^\d{10}$/") {
-        errors.push("Please enter your valid 10-digit Phone Number");
-    }
+    // if (req.body.phoneNo != "/^\d{10}$/") {
+    //     errors.push("Please enter your valid 10-digit Phone Number");
+    // }
+
     if (req.body.email == "") {
         errors.push("Please enter your  E-mail address");
     }
@@ -149,6 +150,9 @@ app.post("/sendMessage", (req, res) => {
     }
     if (req.body.pswConfirm == "") {
         errors.push("Please reenter your Password");
+    }
+    if (req.body.psw.length <= 8) {
+        errors.push("Please enter at least 8 digit password");
     }
     if (req.body.psw != req.body.pswConfirm) {
         errors.push("Your password and confirm password must match!");
@@ -161,14 +165,14 @@ app.post("/sendMessage", (req, res) => {
             messages: errors
         })
     } else {
-        const accountSid = 'ACbcb839411d121b12ae13365ae2f163f6';
-        const authToken = '0ceaaf35767786d44f89c255aa1adccd';
-        const client = require('twilio')('ACbcb839411d121b12ae13365ae2f163f6', '0ceaaf35767786d44f89c255aa1adccd');
+        const accountSid = 'ACb43694ef62d99d67ce028f5afcfb3db8_random';
+        const authToken = '2494df27da7513651fb5309fca748196_random';
+        const client = require('twilio')('ACb43694ef62d99d67ce028f5afcfb3db8_random', '2494df27da7513651fb5309fca748196_random');
 
         client.messages
             .create({
                 body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!!`,
-                from: '+12012317349',
+                from: '+18024733989',
                 to: `${req.body.phoneNo}`
             })
             .then(message => {
@@ -195,6 +199,12 @@ app.post("/sendMessageLogin", (req, res) => {
     }
     if (req.body.psw == "") {
         error.push("Please enter your Password");
+    }
+    if (req.body.uname && req.body.psw != "") {
+        res.render('home', {
+            title: "Home",
+        })
+
     }
     if (error.length > 0) {
         res.render("login", {
