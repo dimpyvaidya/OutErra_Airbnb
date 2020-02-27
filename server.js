@@ -1,6 +1,7 @@
 const express = require("express");
 const exphbs = require('express-handlebars');
 const bodyParser = require('body-parser');
+const roomModel = require("./models/rooms");
 const app = express();
 app.use(express.static('static'));
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -21,81 +22,96 @@ app.get("/home", (req, res) => {
     })
 })
 
+// app.get("/roomlisting", (req, res) => {
+//     const hotelsDB = [];
+//     hotelsDB.push({
+//         hotelId: 101,
+//         imageUrl: `/img/hotel1m.jpg`,
+//         title: "Heart Lake Hotel",
+//         description: "Private pool house with amazing views",
+//         price: 150,
+//         rateImageUrl: "/img/user1.png",
+//         feedbacker: "Darsh",
+//         feedback: "Highly recommended!!!",
+//         rating: 3
+//     });
+//     hotelsDB.push({
+//         hotelId: 102,
+//         imageUrl: `/img/hotel2m.jpg`,
+//         title: "Park Regis Hotel",
+//         description: "Romentic 1-bed with stunning views",
+//         price: 250,
+//         rateImageUrl: "/img/user2.png",
+//         feedbacker: "Darshu",
+//         feedback: "I booked the spa room and was lovely...",
+//         rating: 4
+//     });
+//     hotelsDB.push({
+//         hotelId: 103,
+//         imageUrl: `/img/hotel3m.jpg`,
+//         title: "Redissan Hotel",
+//         description: "Classic hotel on the Royal Mile",
+//         price: 303,
+//         rateImageUrl: "/img/user3.png",
+//         feedbacker: "Rekha",
+//         feedback: "Amazing views! The food was delicious..",
+//         rating: 5
+//     });
+//     hotelsDB.push({
+//         hotelId: 104,
+//         imageUrl: `/img/hotel4m.jpg`,
+//         title: "Anantara Hotel",
+//         description: "Romentic 1-bed with stunning views",
+//         price: 200,
+//         rateImageUrl: "/img/user4.png",
+//         feedbacker: "Dimpu",
+//         feedback: "Great location, nothing too much trouble",
+//         rating: 3
+//     });
+//     hotelsDB.push({
+//         hotelId: 105,
+//         imageUrl: `/img/hotel5m.jpg`,
+//         title: "Hamilton Hotel",
+//         description: "Classic hotel on the Royal Mile",
+//         price: 100,
+//         rateImageUrl: "/img/user5.png",
+//         feedbacker: "Pinku",
+//         feedback: "Great location, nothing too much trouble",
+//         rating: 5
+//     });
+//     hotelsDB.push({
+//         hotelId: 106,
+//         imageUrl: `/img/hotel7m.jpg`,
+//         title: "Ramada Hotel",
+//         description: "Private pool house with amazing views",
+//         price: 170,
+//         rateImageUrl: "/img/user6.png",
+//         feedbacker: "Kalpu",
+//         feedback: "Great location, nothing too much trouble",
+//         rating: 3
+//     });
+
+//     res.render("roomlisting", {
+//         title: "Room Listing",
+//         headingInfo: "Room Listing Page",
+//         hotels: hotelsDB
+//     });
+// });
+
+
 app.get("/roomlisting", (req, res) => {
-    const hotelsDB = [];
-    hotelsDB.push({
-        hotelId: 101,
-        imageUrl: `/img/hotel1m.jpg`,
-        title: "Heart Lake Hotel",
-        description: "Private pool house with amazing views",
-        price: 150,
-        rateImageUrl: "/img/user1.png",
-        feedbacker: "Darsh",
-        feedback: "Highly recommended!!!",
-        rating: 3
-    });
-    hotelsDB.push({
-        hotelId: 102,
-        imageUrl: `/img/hotel2m.jpg`,
-        title: "Park Regis Hotel",
-        description: "Romentic 1-bed with stunning views",
-        price: 250,
-        rateImageUrl: "/img/user2.png",
-        feedbacker: "Darshu",
-        feedback: "I booked the spa room and was lovely...",
-        rating: 4
-    });
-    hotelsDB.push({
-        hotelId: 103,
-        imageUrl: `/img/hotel3m.jpg`,
-        title: "Redissan Hotel",
-        description: "Classic hotel on the Royal Mile",
-        price: 303,
-        rateImageUrl: "/img/user3.png",
-        feedbacker: "Rekha",
-        feedback: "Amazing views! The food was delicious..",
-        rating: 5
-    });
-    hotelsDB.push({
-        hotelId: 104,
-        imageUrl: `/img/hotel4m.jpg`,
-        title: "Anantara Hotel",
-        description: "Romentic 1-bed with stunning views",
-        price: 200,
-        rateImageUrl: "/img/user4.png",
-        feedbacker: "Dimpu",
-        feedback: "Great location, nothing too much trouble",
-        rating: 3
-    });
-    hotelsDB.push({
-        hotelId: 105,
-        imageUrl: `/img/hotel5m.jpg`,
-        title: "Hamilton Hotel",
-        description: "Classic hotel on the Royal Mile",
-        price: 100,
-        rateImageUrl: "/img/user5.png",
-        feedbacker: "Pinku",
-        feedback: "Great location, nothing too much trouble",
-        rating: 5
-    });
-    hotelsDB.push({
-        hotelId: 106,
-        imageUrl: `/img/hotel7m.jpg`,
-        title: "Ramada Hotel",
-        description: "Private pool house with amazing views",
-        price: 170,
-        rateImageUrl: "/img/user6.png",
-        feedbacker: "Kalpu",
-        feedback: "Great location, nothing too much trouble",
-        rating: 3
+    res.render("roomlisting", {
+        title: "Rooms Page",
+        rooms: roomModel.getallRooms()
     });
 
-    res.render("roomlisting", {
-        title: "Room Listing",
-        headingInfo: "Room Listing Page",
-        hotels: hotelsDB
-    });
 });
+
+app.post("/rooms", (req, res) => {
+
+    //When the form is submitted
+})
+
 
 app.get("/userregistration", (req, res) => {
     res.render("userregistration", {
@@ -214,7 +230,7 @@ app.post("/sendMessageLogin", (req, res) => {
 });
 
 
-
-app.listen(3000, () => {
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
     console.log(`Web server is running`);
 })
