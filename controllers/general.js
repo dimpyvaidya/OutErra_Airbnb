@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const roomModel = require("../models/rooms");
+const fRoomModel = require("../models/fRooms");
 
 router.get("/", (req, res) => {
     res.render('home', {
@@ -29,7 +30,7 @@ router.get("/roomlisting", (req, res) => {
 router.get("/featuredRooms", (req, res) => {
     res.render("featuredRooms", {
         title: "Featured Rooms Page",
-        fRooms: roomModel.getallRoomsF()
+        fRooms: fRoomModel.getallRoomsF()
     });
 
 });
@@ -122,9 +123,9 @@ router.post("/sendMessage", (req, res) => {
     } else {
         //Send Message , once user registers
 
-        const accountSid = 'ACb43694ef62d99d67ce028f5afcfb3db8_random';
-        const authToken = '2494df27da7513651fb5309fca748196_random';
-        const client = require('twilio')('ACb43694ef62d99d67ce028f5afcfb3db8_random', '2494df27da7513651fb5309fca748196_random');
+        const accountSid = 'ACCOUNTSID';
+        const authToken = 'AUTHTOKEN';
+        const client = require('twilio')('ACCOUNTSID', 'AUTHTOKEN');
 
         client.messages
             .create({

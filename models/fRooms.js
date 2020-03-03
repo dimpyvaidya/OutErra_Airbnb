@@ -1,40 +1,40 @@
 const fRooms = {
-    hotelsDB: [],
+    roomDB: [],
     init() {
-        const hotelsDB = [];
-        this.hotelsDB.push({
-            hotelId: 101,
+        const roomDB = [];
+        this.roomDB.push({
+            roomId: 101,
             imageUrl: `/img/froom1.jpg`,
             title: "Marrietta Entryway"
         });
-        this.hotelsDB.push({
-            hotelId: 102,
+        this.roomDB.push({
+            roomId: 102,
             imageUrl: `/img/froom2.jpg`,
             title: "Park Regis Hotel"
         });
-        this.hotelsDB.push({
-            hotelId: 103,
+        this.roomDB.push({
+            roomId: 103,
             imageUrl: `/img/froom3.jpg`,
             title: "Redissan Hotel"
         });
-        this.hotelsDB.push({
-            hotelId: 104,
+        this.roomDB.push({
+            roomId: 104,
             imageUrl: `/img/froom4.jpg`,
             title: "Heart Lake Hotel"
         });
-        this.hotelsDB.push({
-            hotelId: 105,
+        this.roomDB.push({
+            roomId: 105,
             imageUrl: `/img/froom5.jpg`,
             title: "Park Regis Hotel"
         });
-        this.hotelsDB.push({
-            hotelId: 106,
+        this.roomDB.push({
+            roomId: 106,
             imageUrl: `/img/froom6.jpg`,
             title: "Redissan Hotel"
         });
     },
     getallRoomsF() {
-        return this.hotelsDB;
+        return this.roomDB;
     }
 }
 
