@@ -1,0 +1,15 @@
+ <div class="main-heading">
+    <br><br><br>
+    <h2>Featured Rooms</h2><br>
+</div>
+<div class="hotel-container">
+    {{#each fRooms}}
+        <section class="hotel_block "> 
+            <img src={{this.imageUrl}}  class="hotelimg " alt="hotelImg">
+            <div class="hotel_content">
+                <h2 class="hotelnm"><strong>{{this.title}}</strong></h2>
+                
+            </div>
+        </section>
+        {{/each}}
+    </div>

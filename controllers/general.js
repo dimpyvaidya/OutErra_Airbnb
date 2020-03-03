@@ -26,7 +26,19 @@ router.get("/roomlisting", (req, res) => {
 
 });
 
+router.get("/featuredRooms", (req, res) => {
+    res.render("featuredRooms", {
+        title: "Featured Rooms Page",
+        fRooms: roomModel.getallRoomsF()
+    });
+
+});
+
 router.post("/rooms", (req, res) => {
+
+    //When the form is submitted
+})
+router.post("/fRooms", (req, res) => {
 
     //When the form is submitted
 })
