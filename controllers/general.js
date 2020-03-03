@@ -58,6 +58,7 @@ router.get("/sendMessage", (req, res) => {
     });
 });
 
+
 router.post("/sendMessage", (req, res) => {
     const errors = [];
     if (req.body.Name == "") {
@@ -107,6 +108,8 @@ router.post("/sendMessage", (req, res) => {
             messages: errors
         })
     } else {
+        //Send Message , once user registers
+
         const accountSid = 'ACb43694ef62d99d67ce028f5afcfb3db8_random';
         const authToken = '2494df27da7513651fb5309fca748196_random';
         const client = require('twilio')('ACb43694ef62d99d67ce028f5afcfb3db8_random', '2494df27da7513651fb5309fca748196_random');
@@ -125,6 +128,31 @@ router.post("/sendMessage", (req, res) => {
                 console.log(`Error ${err}`);
             })
     }
+});
+
+//Send Email , once user registers
+// using Twilio SendGrid's v3 Node.js Library
+// https://github.com/sendgrid/sendgrid-nodejs
+
+router.post("/userregistration", (req, res) => {
+    const sgMail = require('@sendgrid/mail');
+    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+    const msg = {
+        to: `${req.body.email}`,
+        from: 'vaidyadimpy@gmail.com',
+        subject: 'Sending with OutErra',
+        html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
+
+    };
+
+    sgMail.send(msg)
+        .then(() => {
+            res.redirect("/");
+        })
+        .catch(err => {
+            console.log(`Error ${err}`);
+        });
+
 });
 
 //Login page validation
