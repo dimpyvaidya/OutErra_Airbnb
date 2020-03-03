@@ -107,9 +107,9 @@ router.post("/sendMessage", (req, res) => {
         errors.push("Please enter a Password");
     }
     // complex validation
-    else if (req.body.psw.length <= 8) {
-        errors.push("Please enter at least 8 digit password");
-    }
+    // else if (req.body.psw.length <= 8) {
+    //     errors.push("Please enter at least 8 digit password");
+    // }
     if (req.body.psw != req.body.pswConfirm) {
         errors.push("Your password and confirm password must match!");
     }
@@ -123,14 +123,28 @@ router.post("/sendMessage", (req, res) => {
     } else {
         //Send Message , once user registers
 
-        const accountSid = 'ACCOUNTSID';
-        const authToken = 'AUTHTOKEN';
-        const client = require('twilio')('ACCOUNTSID', 'AUTHTOKEN');
-
-        client.messages
+        const accountSid = process.env.TWILIO_AUTHID;
+        const authToken = process.env.TWILIO_TOKEN;
+        const client = require('twilio')(accountSid, authToken);
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
+            to: `${req.body.email}`,
+            from: 'vaidyadimpy@gmail.com',
+            subject: 'Sending with OutErra',
+            html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
+        };
+        sgMail.send(msg)
+            .then(() => {
+                res.redirect("dashboard");
+            })
+            .catch((err) => {
+                console.log(err);
+            }),
+            client.messages
             .create({
                 body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!!`,
-                from: '+18024733989',
+                from: '+12053081617',
                 to: `${req.body.phoneNo}`
             })
             .then(message => {
@@ -147,26 +161,25 @@ router.post("/sendMessage", (req, res) => {
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
 
-router.post("/userregistration", (req, res) => {
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-    const msg = {
-        to: `${req.body.email}`,
-        from: 'vaidyadimpy@gmail.com',
-        subject: 'Sending with OutErra',
-        html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
+// router.post("/userregistration", (req, res) => {
+//     const sgMail = require('@sendgrid/mail');
+//     sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+// const msg = {
+//     to: `${req.body.email}`,
+//     from: 'vaidyadimpy@gmail.com',
+//     subject: 'Sending with OutErra',
+//     html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
+// };
 
-    };
+// sgMail.send(msg)
+//     .then(() => {
+//         res.redirect("/");
+//     })
+//     .catch(err => {
+//         console.log(`Error ${err}`);
+//     });
 
-    sgMail.send(msg)
-        .then(() => {
-            res.redirect("/");
-        })
-        .catch(err => {
-            console.log(`Error ${err}`);
-        });
-
-});
+// });
 
 //Login page validation
 router.get("/sendMessageLogin", (req, res) => {
