@@ -47,13 +47,12 @@
         z-index: 9999;
         padding: 1em 0;
     }
-    
-    .navbar {
+    /* .navbar {
         padding: 0 1em;
         display: grid;
         grid-template-columns: 1fr;
         grid-template-areas: "drop" "menu";
-    }
+    } */
     
     .hamburger {
         grid-area: drop;
@@ -72,7 +71,7 @@
     .mainmenu {
         grid-area: menu;
         text-align: left;
-        display: none;
+        /* display: none; */
     }
     
     .mainmenu a {
@@ -105,6 +104,7 @@
         padding: 0 0 20em 0;
         text-align: center;
         opacity: 0.9;
+        margin-top: 13em;
     }
     
     .logo {
@@ -538,7 +538,15 @@
     
     @media screen and (min-width: 768px) {
         .header {
+            background-image: url("../img/headerimg.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            height: 60%;
+            padding: 0 0 20em 0;
+            text-align: center;
+            opacity: 0.9;
             padding: 0 0 25em 0;
+            margin: 0;
         }
         .menuicon {
             height: 4%;
