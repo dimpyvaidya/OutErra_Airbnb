@@ -14,8 +14,8 @@ router.get("/", (req, res) => {
 router.get("/home", (req, res) => {
     res.render('home', {
         title: "Home",
-    })
-})
+    });
+});
 
 
 router.get("/roomlisting", (req, res) => {
