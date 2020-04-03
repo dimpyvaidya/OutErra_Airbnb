@@ -3,6 +3,21 @@ const router = express.Router();
 
 const roomModel = require("../models/rooms");
 const fRoomModel = require("../models/fRooms");
+const taskmodel = require("./models/task");
+const adminmodel = require("./models/admin");
+
+//This allows express to make my static content avialable from the public
+router.use(express.static('static'));
+router.use(bodyParser.urlencoded({ extended: false }))
+
+router.use((req, res, next) => {
+    if (req.query.method == "PUT") {
+        req.method = "PUT"
+    } else if (req.query.method == "DELETE") {
+        req.method = "DELETE"
+    }
+    next();
+})
 
 router.get("/", (req, res) => {
     res.render('home', {
@@ -50,13 +65,46 @@ router.get("/userregistration", (req, res) => {
         headingInfo: "User Registration Page",
     });
 });
-router.get("/dashboard", (req, res) => {
 
-    res.render("dashboard", {
-        title: "User Dashboard",
-        headingInfo: "User Dashboard"
+router.get("/logout", (req, res) => {
+
+    res.render("logout", {
+        title: "Log Out",
+        headingInfo: "Log Out Page",
     });
 });
+router.get("/dashboard", (req, res) => {
+
+    taskmodel.find()
+        .then((store) => {
+
+            const filtertask = store.map(result => {
+
+                return {
+
+                    Name: result.Name,
+                    Address: result.Address,
+                    PostalCode: result.PostalCode,
+                    phoneNo: result.phoneNo,
+                    email: result.email
+                }
+            });
+            res.render("adminedit", {
+                data: filtertask
+            })
+        })
+
+    .catch(err => console.log(`error in pulling database : ${err}`));
+});
+
+
+// router.get("/dashboard", (req, res) => {
+
+//     res.render("dashboard", {
+//         title: "User Dashboard",
+//         headingInfo: "User Dashboard"
+//     });
+// });
 router.get("/login", (req, res) => {
     res.render("login", {
         title: "Login page",
@@ -64,6 +112,13 @@ router.get("/login", (req, res) => {
     });
 });
 
+router.get("/admin", (req, res) => {
+
+    res.render("admin", {
+        title: "Admin page",
+        headingInfo: "Admin  Page",
+    });
+});
 //Registration page validation
 router.get("/sendMessage", (req, res) => {
     res.render("userregistration", {
@@ -91,11 +146,9 @@ router.post("/sendMessage", (req, res) => {
     }
     if (req.body.phoneNo == "") {
         errors.push("Please enter your phone number");
+    } else if (req.body.phoneNo.length < 10) {
+        errors.push("Sorry, Your Phone Number is INVALID ");
     }
-    // if (req.body.phoneNo != "/^\d{10}$/") {
-    //     errors.push("Please enter your valid 10-digit Phone Number");
-    // }
-
     if (req.body.email == "") {
         errors.push("Please enter your  E-mail address");
     }
@@ -105,11 +158,9 @@ router.post("/sendMessage", (req, res) => {
     }
     if (req.body.psw == "") {
         errors.push("Please enter a Password");
+    } else if (req.body.psw.length < 4) {
+        errors.push("Sorry, you must enter a Password at least 8 characters ");
     }
-    // complex validation
-    // else if (req.body.psw.length <= 8) {
-    //     errors.push("Please enter at least 8 digit password");
-    // }
     if (req.body.psw != req.body.pswConfirm) {
         errors.push("Your password and confirm password must match!");
     }
