@@ -12,15 +12,7 @@ const AdminSchema = new Schema({
         type: String,
         required: true
     },
-    Price: {
-        type: String,
-        required: true
-    },
-    priority: {
-        type: String,
-        required: true
-    },
-    status: {
+    price: {
         type: String,
         required: true
     },

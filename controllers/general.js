@@ -3,12 +3,10 @@ const router = express.Router();
 
 const roomModel = require("../models/rooms");
 const fRoomModel = require("../models/fRooms");
-const taskmodel = require("./models/task");
-const adminmodel = require("./models/admin");
 
 //This allows express to make my static content avialable from the public
-router.use(express.static('static'));
-router.use(bodyParser.urlencoded({ extended: false }))
+// router.use(express.static('static'));
+// router.use(bodyParser.urlencoded({ extended: false }));
 
 router.use((req, res, next) => {
     if (req.query.method == "PUT") {
