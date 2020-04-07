@@ -1,26 +1,57 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
 
+const adminSchema = new Schema({
 
-const AdminSchema = new Schema({
-
-    title: {
+    Name: {
         type: String,
         required: true
     },
-    description: {
+    Address: {
         type: String,
         required: true
     },
-    price: {
+    City: {
         type: String,
         required: true
     },
-    image: {
+    State: {
+        type: String,
+        required: true
+    },
+    PostalCode: {
+        type: String,
+        required: true
+    },
+    phoneNo: {
+        type: String,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    psw: {
         type: String,
         required: true
     }
-});
 
-const adminmodel = mongoose.model('OutErra_Admin', AdminSchema);
-module.exports = adminmodel;
+});
+adminSchema.pre("save", function(next) {
+    bcrypt.genSalt(10)
+        .then((salt) => {
+            bcrypt.hash(this.psw, salt)
+                .then((encryptpsw) => {
+                    this.psw = encryptpsw;
+                    next();
+                })
+                .catch(err => console.log(`error in encrypt password from hashing database : ${err}`));
+        })
+        .catch(err => console.log(`error in encrypt password from database : ${err}`));
+
+
+
+})
+const adminModel = mongoose.model('Admin', adminSchema);
+module.exports = adminModel;

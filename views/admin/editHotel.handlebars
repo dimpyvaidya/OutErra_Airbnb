@@ -1,49 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/adminedit.css">
-    <script src="https://kit.fontawesome.com/e6cf7acf81.js" crossorigin="anonymous"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title}}</title>
-  </head>
-  </html>
-       <div>
-           <a href="/admin/addHotel" class="nav1">Add Task</a>
-          <a href="/admin/editHotel" class="nav1">Edit Hotel</a>
-           <a href="/home" class="linklogout" >Logout</a>   
-       </div>
-<section class="tasks-container">
-        <form method="POST">
-    <table border="1" style="text-align: center;" class="table">
-        <thead>
-                <th>Hotel Name</th>
-                <th>Hotel Description</th>
-                <th>Price per Night</th>
-                <th>Operation</th>
-        </thead>
-        <tbody>
-            {{#each admindata}}
-                <tr>
-                   <td>
-                        <a href="/admin/addHotel/{{this.id}}" class="task-title">{{this.name}}</a>
-                   </td>
-                   <td>
-                       <span>{{this.description}}</span>
-                      
-                   </td>
-                   <td>
-                        <span>{{this.Price}}</span>
-                   </td>
-                  
-                   <td>
-                        <a href="/adminupdate/{{this.id}}" class="edit-delete-button">Edit</a>
-                        <a href="/adminupdate/{{this.id}}?method=DELETE" class="edit-delete-button">Delete</a>
-                   </td> 
-                </tr>
-            {{/each}}
-            </tbody>
-    </table>
- 
-</section>
+   <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
+<br><br><br><br>
+
+    <form method="POST"  action="/task/update/{{_id}}?method=PUT">
+<div class="container">
+    <h1><br><br>Update Hotel Details</h1>
+    <hr>
+   
+ <label for="name"><b>Hotel Name</b></label>
+    <input type="text" name="name" id="name" placeholder="Enter Name"  value="{{name}}">
+
+        <label for="description"><b>Hotel Description</b></label>
+    <input type="text" name="description" id="description" placeholder="Enter Description" value="{{description}}">
+
+        <label for="price"><b>Price per Night</b></label>
+        <input type="text" name="price" id="price" placeholder="Enter Price" value="{{price}}"><br>
+
+        <label for="views"><b>Room Location</b></label>
+            <select name="views" id="views" class="basicbox room">
+                <option value="noofrooms">Room views</option>
+                <option value="view1">Lake view</option>
+                <option value="view2">City view</option>
+                <option value="view3">Street view</option>
+            </select><br>
+
+        <label for="type"><b>Room Type</b></label>
+        <select name="type" id="type" class="basicbox room">
+                <option value="type">Room Type</option>
+                <option value="type1">Regular Room</option>
+                <option value="type2">Featured Room</option>
+        </select><br>
+
+        <label><b>Upload an image</b></label> 
+        {{!-- <input type="file" name="image" id="image" class="uploadimage"><br><br> --}}
+
+         <input type="submit" value="Update Hotel Details" class="button">
+
+       </form>

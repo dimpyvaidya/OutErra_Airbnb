@@ -8,14 +8,6 @@ const fRoomModel = require("../models/fRooms");
 // router.use(express.static('static'));
 // router.use(bodyParser.urlencoded({ extended: false }));
 
-router.use((req, res, next) => {
-    if (req.query.method == "PUT") {
-        req.method = "PUT"
-    } else if (req.query.method == "DELETE") {
-        req.method = "DELETE"
-    }
-    next();
-})
 
 router.get("/", (req, res) => {
     res.render('home', {
@@ -71,29 +63,29 @@ router.get("/logout", (req, res) => {
         headingInfo: "Log Out Page",
     });
 });
-router.get("/dashboard", (req, res) => {
+// router.get("/dashboard", (req, res) => {
 
-    taskmodel.find()
-        .then((store) => {
+//     taskmodel.find()
+//         .then((store) => {
 
-            const filtertask = store.map(result => {
+//             const filtertask = store.map(result => {
 
-                return {
+//                 return {
 
-                    Name: result.Name,
-                    Address: result.Address,
-                    PostalCode: result.PostalCode,
-                    phoneNo: result.phoneNo,
-                    email: result.email
-                }
-            });
-            res.render("adminedit", {
-                data: filtertask
-            })
-        })
+//                     Name: result.Name,
+//                     Address: result.Address,
+//                     PostalCode: result.PostalCode,
+//                     phoneNo: result.phoneNo,
+//                     email: result.email
+//                 }
+//             });
+//             res.render("adminedit", {
+//                 data: filtertask
+//             })
+//         })
 
-    .catch(err => console.log(`error in pulling database : ${err}`));
-});
+//     .catch(err => console.log(`error in pulling database : ${err}`));
+// });
 
 
 // router.get("/dashboard", (req, res) => {
@@ -112,7 +104,7 @@ router.get("/login", (req, res) => {
 
 router.get("/admin", (req, res) => {
 
-    res.render("admin", {
+    res.render("admin/addHotel", {
         title: "Admin page",
         headingInfo: "Admin  Page",
     });

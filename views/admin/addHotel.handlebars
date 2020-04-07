@@ -1,39 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="/css/admin.css">
-    <script src="https://kit.fontawesome.com/e6cf7acf81.js" crossorigin="anonymous"></script>
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{title}}</title>
-  </head>
+   <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
+<br><br><br><br>
+
+    <form method="POST"  action="/SenddataAdmin">
+<div class="container">
+    <h1><br><br>Add Hotel</h1>
+    <hr>
    
-  <body>
-       <div>
-         <a href="/admin/addHotel" class="nav1">Add Hotel</a>
-          <a href="/admin/editHotel" class="nav1">Edit Hotel</a>
-           <a href="/home" class="linklogout" >Logout</a>   
-       </div>
-       <div class="table">
-           <h2 class="hema">Welcome Admin</h2>
-    <form method="POST" class="adminform" action="/SenddataAdmin">
+ <label for="name"><b>Hotel Name</b></label>
+    <input type="text" name="name" id="name" placeholder="Enter Name">
 
-        <label class="l">Hotel Name </label>
-        <input type="text" name="name" id="name">
+        <label for="description"><b>Hotel Description</b></label>
+    <input type="text" name="description" id="description" placeholder="Enter Description" >
 
-        <label class="l">Hotel Description</label>
-        <input type="text" id="description" name="description">
+        <label for="price"><b>Price per Night</b></label>
+        <input type="text" name="price" id="price" placeholder="Enter Price"><br>
 
-        <label class="l">Price per Night</label>
-        <input type="text" name="Price" id="Price">
+        <label for="views"><b>Room Location</b></label>
+            <select name="views" id="views" class="basicbox room">
+                <option value="noofrooms">Room views</option>
+                <option value="view1">Lake view</option>
+                <option value="view2">City view</option>
+                <option value="view3">Street view</option>
+            </select><br>
 
-        <label class="l">Upload an image</label> 
-        <input type="file" name="image" id="image" class="uploadimage"><br><br>
+        <label for="type"><b>Room Type</b></label>
+        <select name="type" id="type" class="basicbox room">
+                <option value="type">Room Type</option>
+                <option value="type1">Regular</option>
+                <option value="type2">Featured</option>
+        </select><br>
 
-         <button type="submit" class="task" id="task add" >Add Hotel </button>
+        <label><b>Upload an image</b></label> 
+        {{!-- <input type="file" name="image" id="image" class="uploadimage"><br><br> --}}
+
+         <input type="submit" value="Add Hotel" class="button">
+         <a href="/admin/editHotel" class="content_x p-heading">Edit Hotel</a>
+
        </form>
-    </div>
-   
-  </body>
-  </html>
