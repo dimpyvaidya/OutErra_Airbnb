@@ -1,7 +1,7 @@
 <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
 <br><br><br><br>
 
- {{#each messages}}
+ {{#each errors}}
 <li><i class="material-icons" style="color: red; position: relative; text-align:center">error</i>
     {{this}}</li>
 
@@ -13,7 +13,7 @@
     <hr>
 
     <label for="uname"><b>Username</b></label>
-    <input type="text" placeholder="Enter Username" name="uname">
+    <input type="text" placeholder="Enter Username" name="email">
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="psw">

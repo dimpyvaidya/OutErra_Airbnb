@@ -29,21 +29,28 @@
                 <li>
                     <a href="/roomlisting">Explore Hotels</a>
                 </li>
-                <li>
-                    <a href="/featuredRooms">Featured Rooms</a>
-                </li>
-                <li>
+                 {{#if user }}
+                 <a href="/logout" class="nav">LogOut</a>
+                  {{else}}
+                   <li>
                     <a href="/userregistration">Register Now</a>
-                </li>
-                 <li>
-                    <a href="/dashboard">My Dashboard</a>
                 </li>
                 <li>
                     <a href="/login">Log in</a>
                 </li>
-                 <li>
-                    <a href="/admin">Admin</a>
+                 
+            {{/if}}
+                <li>
+                    <a href="/featuredRooms">Featured Rooms</a>
                 </li>
+               
+                 {{!-- <li>
+                    <a href="/dashboard">My Dashboard</a>
+                </li> --}}
+                
+                 {{!-- <li>
+                    <a href="/admin">Admin</a>
+                </li> --}}
             </ul>
         </nav>
     </section>

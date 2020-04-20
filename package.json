@@ -17,8 +17,10 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.2",
     "express-handlebars": "^3.1.0",
+    "express-session": "^1.17.1",
     "index": "^0.4.0",
     "mongoose": "^5.9.7",
+    "nodemailer": "^6.4.6",
     "server": "^1.0.27",
     "twilio": "^3.39.4"
   },

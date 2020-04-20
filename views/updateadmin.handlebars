@@ -1,19 +1,19 @@
    <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
 <br><br><br><br>
 
-    <form method="POST"  action="/task/update/{{_id}}?method=PUT">
+    <form method="POST"   action="/update/{{_id}}?method=PUT">
 <div class="container">
-    <h1><br><br>Update Hotel Details</h1>
+    <h1><br><br>Add Hotel</h1>
     <hr>
    
  <label for="name"><b>Hotel Name</b></label>
-    <input type="text" name="name" id="name" placeholder="Enter Name"  value="{{name}}">
+    <input type="text" name="name" id="name" placeholder="Enter Name">
 
         <label for="description"><b>Hotel Description</b></label>
-    <input type="text" name="description" id="description" placeholder="Enter Description" value="{{description}}">
+    <input type="text" name="description" id="description" placeholder="Enter Description" >
 
         <label for="price"><b>Price per Night</b></label>
-        <input type="text" name="price" id="price" placeholder="Enter Price" value="{{price}}"><br>
+        <input type="text" name="price" id="price" placeholder="Enter Price"><br>
 
         <label for="views"><b>Room Location</b></label>
             <select name="views" id="views" class="basicbox room">
@@ -26,13 +26,13 @@
         <label for="type"><b>Room Type</b></label>
         <select name="type" id="type" class="basicbox room">
                 <option value="type">Room Type</option>
-                <option value="type1">Regular Room</option>
-                <option value="type2">Featured Room</option>
+                <option value="type1">Regular</option>
+                <option value="type2">Featured</option>
         </select><br>
 
         <label><b>Upload an image</b></label> 
-        {{!-- <input type="file" name="image" id="image" class="uploadimage"><br><br> --}}
+        <input type="file" name="image" id="image" class="uploadimage"><br><br>
 
-         <input type="submit" value="Update Hotel Details" class="button">
+         <button type="submit" class="button" id="task add" >Update Hotel </button>
 
        </form>
