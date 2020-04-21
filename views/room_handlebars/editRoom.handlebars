@@ -1,0 +1,40 @@
+   <link rel="stylesheet" type="text/css" href="/css/userregistration.css">
+<br><br><br><br>
+
+    <form method="POST"  action="/room-listing/editRoom" enctype="multipart/form-data">
+<div class="container">
+    <h1><br><br>Edit Hotel</h1>
+    <hr>
+   
+ <label for="title"><b>Hotel Name</b></label>
+    <input type="text" name="title" id="title" placeholder="Enter Name">
+
+        <label for="description"><b>Hotel Description</b></label>
+    <input type="text" name="description" id="description" placeholder="Enter Description" >
+
+        <label for="price"><b>Price per Night</b></label>
+        <input type="text" name="price" id="price" placeholder="Enter Price"><br>
+
+        <label for="location"><b>Room Location</b></label>
+            <select name="location" id="location" class="basicbox room">
+                <option value="noofrooms">Room views</option>
+                <option value="view1">Lake view</option>
+                <option value="view2">City view</option>
+                <option value="view3">Street view</option>
+            </select><br>
+
+        <label for="views"><b>Featured Room</b></label>
+        <br>
+        <input type="text" name="ftrd_rm" id="chck_ys" placeholder="Enter Yes or No"> 
+
+        <label><b>Upload an image</b></label> 
+        <input type="file" name="imageUrl" class="uploadimage"><br><br>
+
+         <button type="submit" class="button" >Edit Hotel </button>
+
+       </form>
+
+<div style="text-align: center;margin:2em;font-size:1.5em; font-weight:bold;" >
+     <a href="/room-listing/view_rooms" style="text-decoration:underline;color:brown"> <i class="fas fa-share" style="margin-right:1em;"></i>View rooms here!</a>
+</div>     
+    

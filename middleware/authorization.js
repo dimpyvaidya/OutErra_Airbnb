@@ -1,11 +1,11 @@
-const dashBoardLoader = (req, res) => {
+const AdminorUser = (req, res, next) => {
+
 
     if (req.session.userInfo.type == "Admin") {
-        res.render("admin");
+        res.render("../views/dashboards/AdminDash");
     } else {
-        res.render("welcome");
+        res.render("../views/dashboards/dashboard");
     }
-
 }
 
-module.exports = dashBoardLoader;
+module.exports = AdminorUser;

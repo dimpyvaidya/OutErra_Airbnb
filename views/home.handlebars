@@ -46,7 +46,31 @@
 
 </section>
 <main>
-    <div class="main-heading">
+     <div class="main-heading">
+    <br><br><br>
+    <h2>Best hotels and accomodations in Canada</h2><br>
+</div>
+<div class="hotel-container">
+    {{#each rooms}}
+        <section class="hotel_block "> 
+            <img src="/hotel_pics/{{imageUrl}}"  class="hotelimg " alt="hotelImg">
+            <div class="hotel_content">
+                <h2 class="hotelnm"><strong>{{this.title}}</strong></h2>
+                <h1 class="desc">{{this.description}}</h1>
+                <h3 class="price"><strong>CAD {{this.price}}/night</strong></h3><br>
+                <div>
+                    <img src={{this.rateImageUrl}} alt="boy" class="rating-view">
+                    <h3 class="comment">{{this.feedbacker}}</h3>
+                    <p class="cmt">{{this.feedback}}</p>
+                    <br>
+                </div>
+                <button type="button" class="button"><span>Book Now</span></button>
+            </div>
+        </section>
+        {{/each}}
+    </div>
+
+    {{!-- <div class="main-heading">
         <h2>Top-rated Experiences</h2>
         <h3>Book activities led by local hosts on your next Trip</h3><br><br>
     </div>
@@ -99,7 +123,7 @@
             </div>
         </div>
 
-    </div>
+    </div> --}}
 </main>
 
 <article class="bgimg">

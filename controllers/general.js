@@ -1,253 +1,277 @@
-// const express = require('express');
-// const router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-// const roomModel = require("../models/rooms");
-// const fRoomModel = require("../models/fRooms");
+const roomModel = require("../models/rooms");
+const userModel = require("../models/dash");
+const adminModel = require("../models/adminRooms");
+const bcrypt = require("bcryptjs");
+const session = require('express-session');
+const LoggedIn = require("../middleware/auth");
+const AdminorUser = require("../middleware/authorization")
 
-// //This allows express to make my static content avialable from the public
-// // router.use(express.static('static'));
-// // router.use(bodyParser.urlencoded({ extended: false }));
+router.use(express.static('/static'));
 
+router.get("/login", (req, res) => {
 
-// router.get("/", (req, res) => {
-//     res.render('home', {
-//         title: "Home",
-//         headingInfo: "Home Page",
-//         randomContent: "Home Page"
-//     })
-// });
+    res.render("login", {
+        title: "Log In",
 
-// router.get("/home", (req, res) => {
-//     res.render('home', {
-//         title: "Home",
-//     });
-// });
+    });
 
+})
+router.get("/room-listing", (req, res) => {
+    res.render("room-listing", {
+        title: "Rooms Page",
+        room: roomModel.getallRooms()
+    });
 
-// router.get("/roomlisting", (req, res) => {
-//     res.render("roomlisting", {
-//         title: "Rooms Page",
-//         rooms: roomModel.getallRooms()
-//     });
+});
 
-// });
+router.get("/", (req, res) => {
+    adminModel.find({ FeaturedRoom: "Yes" })
 
-// router.get("/featuredRooms", (req, res) => {
-//     res.render("featuredRooms", {
-//         title: "Featured Rooms Page",
-//         fRooms: fRoomModel.getallRoomsF()
-//     });
+    .then((records) => {
 
-// });
+        const rooms_data = records.map(record => {
 
-// router.post("/rooms", (req, res) => {
+            return {
+                id: record._id,
+                title: record.title,
+                price: record.price,
+                description: record.description,
+                location: record.location,
+                FeaturedRoom: record.FeaturedRoom,
+                imageUrl: record.imageUrl
 
-//     //When the form is submitted
-// })
-// router.post("/fRooms", (req, res) => {
+            }
+        })
 
-//     //When the form is submitted
-// })
+        res.render("../views/home", {
+            rooms: rooms_data,
+            heading: "Featured Rooms"
+        });
 
-// router.get("/userregistration", (req, res) => {
-//     res.render("userregistration", {
-//         title: "userregistration",
-//         headingInfo: "User Registration Page",
-//     });
-// });
+    })
 
-// router.get("/logout", (req, res) => {
+    .catch(err => console.log(`Error occured while displaying the data ${err}`))
 
-//     res.render("logout", {
-//         title: "Log Out",
-//         headingInfo: "Log Out Page",
-//     });
-// });
-// // router.get("/dashboard", (req, res) => {
-
-// //     taskmodel.find()
-// //         .then((store) => {
-
-// //             const filtertask = store.map(result => {
-
-// //                 return {
-
-// //                     Name: result.Name,
-// //                     Address: result.Address,
-// //                     PostalCode: result.PostalCode,
-// //                     phoneNo: result.phoneNo,
-// //                     email: result.email
-// //                 }
-// //             });
-// //             res.render("adminedit", {
-// //                 data: filtertask
-// //             })
-// //         })
-
-// //     .catch(err => console.log(`error in pulling database : ${err}`));
-// // });
+})
 
 
-// // router.get("/dashboard", (req, res) => {
+router.get("/home", (req, res) => {
+    adminModel.find({ FeaturedRoom: "Yes" })
 
-// //     res.render("dashboard", {
-// //         title: "User Dashboard",
-// //         headingInfo: "User Dashboard"
-// //     });
-// // });
-// router.get("/login", (req, res) => {
-//     res.render("login", {
-//         title: "Login page",
-//         headingInfo: "Login  Page",
-//     });
-// });
+    .then((records) => {
 
-// router.get("/admin", (req, res) => {
+        const rooms_data = records.map(record => {
 
-//     res.render("admin/addHotel", {
-//         title: "Admin page",
-//         headingInfo: "Admin  Page",
-//     });
-// });
-// //Registration page validation
-// router.get("/sendMessage", (req, res) => {
-//     res.render("userregistration", {
-//         title: "SMS Page"
-//     });
-// });
+            return {
+                id: record._id,
+                title: record.title,
+                price: record.price,
+                description: record.description,
+                location: record.location,
+                FeaturedRoom: record.FeaturedRoom,
+                imageUrl: record.imageUrl
+
+            }
+        })
+
+        res.render("../views/home", {
+            rooms: rooms_data,
+            heading: "Featured Rooms"
+        });
+
+    })
+
+    .catch(err => console.log(`Error occured while displaying the data ${err}`))
+
+})
+
+router.get("/userregistration", (req, res) => {
+    res.render("userregistration", {
+        title: "userregistration",
+        headingInfo: "User Registration Page",
+    });
+});
+
+router.get("/dashboard", LoggedIn, AdminorUser, (req, res) => {
+    res.render("../views/dashboards/dashboard", {
+        title: "Dashboard Page",
+        headingInfo: "Dashboard Page",
+    });
+})
+
+// login validation
+router.post("/validation", (req, res) => {
+
+    userModel.findOne({ Email: req.body.email })
+        .then(user => {
+
+            const errors = [];
+            if (user == null) {
+                errors.push("Sorry , you have entered invalid credentials!");
+                res.render("../views/login", {
+                    messages: errors
+                })
+            } else {
+                bcrypt.compare(req.body.psw, user.psw)
+                    .then(isMatched => {
+
+                        if (isMatched) {
+                            req.session.userInfo = user;
+                            res.redirect("dashboard");
+                        } else {
+                            errors.push("Sorry , you have entered invalid credentials!");
+                            res.render("../views/login", {
+                                messages: errors
+                            })
+                        }
+                    })
+                    .catch((err) => console.log(err));
+            }
+        })
+        .catch((err) => console.log(err));
+
+});
+
+//Registration page validation
+router.get("/sendMessage", (req, res) => {
+    res.render("userregistration", {
+        title: "SMS Page"
+    });
+});
 
 
-// router.post("/sendMessage", (req, res) => {
-//     const errors = [];
-//     if (req.body.Name == "") {
-//         errors.push("Please enter your Name");
-//     }
-//     if (req.body.Address == "") {
-//         errors.push("Please enter your Address");
-//     }
-//     if (req.body.City == "") {
-//         errors.push("Please enter your City");
-//     }
-//     if (req.body.State == "") {
-//         errors.push("Please enter your State");
-//     }
-//     if (req.body.PostalCode == "") {
-//         errors.push("Please enter your Postal Code");
-//     }
-//     if (req.body.phoneNo == "") {
-//         errors.push("Please enter your phone number");
-//     } else if (req.body.phoneNo.length < 10) {
-//         errors.push("Sorry, Your Phone Number is INVALID ");
-//     }
-//     if (req.body.email == "") {
-//         errors.push("Please enter your  E-mail address");
-//     }
+router.post("/sendMessage", (req, res) => {
+    const errors = [];
+    if (req.body.Name == "") {
+        errors.push("Please enter your Name");
+    }
+    if (req.body.Address == "") {
+        errors.push("Please enter your Address");
+    }
+    if (req.body.City == "") {
+        errors.push("Please enter your City");
+    }
+    if (req.body.State == "") {
+        errors.push("Please enter your State");
+    }
+    if (req.body.PostalCode == "") {
+        errors.push("Please enter your Postal Code");
+    }
+    if (req.body.phoneNo == "") {
+        errors.push("Please enter your phone number");
+    } else if (req.body.phoneNo.length < 10) {
+        errors.push("Sorry, Your Phone Number is INVALID ");
+    }
+    if (req.body.email == "") {
+        errors.push("Please enter your  E-mail address");
+    }
 
-//     if (req.body.pswConfirm == "") {
-//         errors.push("Please reenter your Password");
-//     }
-//     if (req.body.psw == "") {
-//         errors.push("Please enter a Password");
-//     } else if (req.body.psw.length < 4) {
-//         errors.push("Sorry, you must enter a Password at least 8 characters ");
-//     }
-//     if (req.body.psw != req.body.pswConfirm) {
-//         errors.push("Your password and confirm password must match!");
-//     }
-//     if (req.body.uname == "") {
-//         errors.push("Please enter a Username");
-//     }
-//     if (errors.length > 0) {
-//         res.render("userregistration", {
-//             messages: errors
-//         })
-//     } else {
-//         //Send Message , once user registers
+    if (req.body.pswConfirm == "") {
+        errors.push("Please reenter your Password");
+    }
+    if (req.body.psw == "") {
+        errors.push("Please enter a Password");
+    } else if (req.body.psw.length < 4) {
+        errors.push("Sorry, you must enter a Password at least 8 characters ");
+    }
+    if (req.body.psw != req.body.pswConfirm) {
+        errors.push("Your password and confirm password must match!");
+    }
+    if (req.body.uname == "") {
+        errors.push("Please enter a Username");
+    }
+    if (errors.length > 0) {
+        res.render("userregistration", {
+            messages: errors
+        })
+    } else {
 
-//         const accountSid = process.env.TWILIO_AUTHID;
-//         const authToken = process.env.TWILIO_TOKEN;
-//         const client = require('twilio')(accountSid, authToken);
-//         const sgMail = require('@sendgrid/mail');
-//         sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-//         const msg = {
-//             to: `${req.body.email}`,
-//             from: 'vaidyadimpy@gmail.com',
-//             subject: 'Sending with OutErra',
-//             html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
-//         };
-//         sgMail.send(msg)
-//             .then(() => {
-//                 res.redirect("dashboard");
-//             })
-//             .catch((err) => {
-//                 console.log(err);
-//             }),
-//             client.messages
-//             .create({
-//                 body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!!`,
-//                 from: '+12053081617',
-//                 to: `${req.body.phoneNo}`
-//             })
-//             .then(message => {
-//                 console.log(message.sid);
-//                 res.render("home");
-//             })
-//             .catch((err) => {
-//                 console.log(`Error ${err}`);
-//             })
-//     }
-// });
+        const newUser = {
 
-// //Send Email , once user registers
-// // using Twilio SendGrid's v3 Node.js Library
-// // https://github.com/sendgrid/sendgrid-nodejs
+            Name: req.body.Name,
+            Address: req.body.Address,
+            City: req.body.City,
+            State: req.body.State,
+            PostalCode: req.body.PostalCode,
+            phoneNo: req.body.phoneNo,
+            email: req.body.email,
+            psw: req.body.psw,
+            pswConfirm: req.body.pswConfirm
+        }
 
-// // router.post("/userregistration", (req, res) => {
-// //     const sgMail = require('@sendgrid/mail');
-// //     sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
-// // const msg = {
-// //     to: `${req.body.email}`,
-// //     from: 'vaidyadimpy@gmail.com',
-// //     subject: 'Sending with OutErra',
-// //     html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
-// // };
+        const user = new userModel(newUser);
 
-// // sgMail.send(msg)
-// //     .then(() => {
-// //         res.redirect("/");
-// //     })
-// //     .catch(err => {
-// //         console.log(`Error ${err}`);
-// //     });
+        user.save()
 
-// // });
+        .then(() => {
+            console.log("User created in the database");
+        })
 
-// //Login page validation
-// router.get("/sendMessageLogin", (req, res) => {
-//     res.render("login", {
-//         title: "SMS Page"
-//     });
-// });
+        .catch(error => console.log(`Error While creating the user ${error}`))
 
-// router.post("/sendMessageLogin", (req, res) => {
-//     const error = [];
-//     if (req.body.uname == "") {
-//         error.push("Please enter your Username");
-//     }
-//     if (req.body.psw == "") {
-//         error.push("Please enter your Password");
-//     }
-//     if (req.body.uname && req.body.psw != "") {
-//         res.render('home', {
-//             title: "Home",
-//         })
+        //Send Message , once user registers
 
-//     }
-//     if (error.length > 0) {
-//         res.render("login", {
-//             messages: error
-//         })
-//     }
-// });
+        const accountSid = process.env.TWILIO_AUTHID;
+        const authToken = process.env.TWILIO_TOKEN;
+        const client = require('twilio')(accountSid, authToken);
+        const sgMail = require('@sendgrid/mail');
+        sgMail.setApiKey(process.env.SEND_GRID_API_KEY);
+        const msg = {
+            to: `${req.body.email}`,
+            from: 'vaidyadimpy@gmail.com',
+            subject: 'Sending with OutErra',
+            html: `Hey ${req.body.Name}! <br><br> Thank you for registering with OutErra with ${req.body.email} email address, you will be notified with our promotional offers and  deals!!!`,
+        };
+        sgMail.send(msg)
+            .then(() => {
+                res.redirect("home");
+            })
+            .catch((err) => {
+                console.log(err);
+            }),
+            client.messages
+            .create({
+                body: `Hey ${req.body.Name}! Thank you for registering with OutErra with ${req.body.email} email address, you will be notified when any promotional offer arrives!!!`,
+                from: '+12053081617',
+                to: `${req.body.phoneNo}`
+            })
+            .then(message => {
+                console.log(message.sid);
+                res.render("home");
+            })
+            .catch((err) => {
+                console.log(`Error ${err}`);
+            })
+    }
+});
 
-// module.exports = router;
+//Route for Room images
+
+router.get("/room_pic/:id", (req, res) => {
+
+    adminModel.findById(req.params.id)
+        .then((user) => {
+
+            const { imageUrl } = user;
+
+            res.render("../views/dashboards/AdminDash", {
+                imageUrl
+            })
+        })
+
+    .catch(err => console.log(`Error displaying rooms from the database ${err}`));
+})
+
+/***************** LOGOUT Route ***********/
+
+router.get("/logout", (req, res) => {
+
+    req.session.destroy();
+    res.redirect("/login")
+})
+
+
+module.exports = router;

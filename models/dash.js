@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
 
-const taskSchema = new Schema({
+
+const userSchema = new Schema({
 
     Name: {
         type: String,
@@ -25,7 +26,7 @@ const taskSchema = new Schema({
         required: true
     },
     phoneNo: {
-        type: String,
+        type: Number,
         required: true
     },
     email: {
@@ -36,25 +37,30 @@ const taskSchema = new Schema({
         type: String,
         required: true
     },
+    pswConfirm: {
+        type: String,
+        required: true
+    },
+
     type: {
         type: String,
         default: "User"
     }
 });
-adminSchema.pre("save", function(next) {
+userSchema.pre("save", function(next) {
+
     bcrypt.genSalt(10)
         .then((salt) => {
-            bcrypt.hash(this.psw, salt)
-                .then((encryptpsw) => {
-                    this.psw = encryptpsw;
-                    next();
-                })
-                .catch(err => console.log(`error in encrypt password from hashing database : ${err}`));
+            bcrypt.hash(this.Password, salt)
+
+            .then((encryptedPassword) => {
+                this.Password = encryptedPassword;
+                next();
+            })
         })
-        .catch(err => console.log(`error in encrypt password from database : ${err}`));
-
-
-
+        .catch(error => console.log(`Error occured while salting the password ${error}`));
 })
-const taskmodel = mongoose.model('AirBnB', taskSchema);
-module.exports = taskmodel;
+
+const userModel = mongoose.model('User', userSchema);
+
+module.exports = userModel;
