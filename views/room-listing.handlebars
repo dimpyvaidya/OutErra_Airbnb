@@ -5,17 +5,17 @@
 <div class="hotel-container">
     {{#each rooms}}
         <section class="hotel_block "> 
-            <img src={{this.imageUrl}}  class="hotelimg " alt="hotelImg">
+            <img src="/hotel_pics/{{imageUrl}}"  class="hotelimg " alt="hotelImg">
             <div class="hotel_content">
                 <h2 class="hotelnm"><strong>{{this.title}}</strong></h2>
                 <h1 class="desc">{{this.description}}</h1>
                 <h3 class="price"><strong>CAD {{this.price}}/night</strong></h3><br>
-                <div>
+                {{!-- <div>
                     <img src={{this.rateImageUrl}} alt="boy" class="rating-view">
                     <h3 class="comment">{{this.feedbacker}}</h3>
                     <p class="cmt">{{this.feedback}}</p>
                     <br>
-                </div>
+                </div> --}}
                 <button type="button" class="button"><span>Book Now</span></button>
             </div>
         </section>

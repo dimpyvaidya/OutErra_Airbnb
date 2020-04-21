@@ -1,3 +1,8 @@
+<div class="main-heading">
+    <br><br><br>
+    <h2>View all the Rooms</h2>
+    <h3>(Edit/ Delete Rooms)</h3>
+</div><br><br>
 
 <div class="hotel-container">
     {{#each rooms}}
@@ -7,9 +12,11 @@
                 <h2 class="hotelnm"><strong>{{this.title}}</strong></h2>
                 <h1 class="desc">{{this.description}}</h1>
                 <h3 class="price"><strong>CAD {{this.price}}/night</strong></h3><br>
+
                  <div style="text-align: center;">
-                <a href="/room-listing/edit_rooms/{{this.id}}" class="button" id="edit_btn">Edit</a>
-                <a href="/room-listing/delete/{{this.id}}?method=DELETE" class="button" id="delete_btn">Delete</a>
+                <a href="/room-listing/edit_rooms/{{this.id}}"  id="edit_btn" style="text-decoration:underline;color:#990033"><strong>Edit</strong></a>
+                <a href="/room-listing/delete/{{this.id}}?method=DELETE"  id="delete_btn" style="text-decoration:underline;color:#990033"><strong>Delete</strong></a><br>
+                <p style="color:lightgrey">.</p>
                 </div>
             </div>
         </section>

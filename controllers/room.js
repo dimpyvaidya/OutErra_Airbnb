@@ -40,13 +40,42 @@ router.get("/", (req, res) => {
 
 })
 
-
 router.get("/admin_dash", LoggedIn, AdminorUser, (req, res) => {
     res.render("../views/dashboards/adminDashboard")
 })
 
 router.get("/create_rooms", (req, res) => {
     res.render("../views/room_handlebars/addRoom")
+})
+
+router.get("/room-listing", (req, res) => {
+    adminModel.find({ FeaturedRoom: "No" })
+
+    .then((records) => {
+
+        const rooms_data = records.map(record => {
+
+            return {
+                id: record._id,
+                title: record.title,
+                price: record.price,
+                description: record.description,
+                location: record.location,
+                FeaturedRoom: record.FeaturedRoom,
+                imageUrl: record.imageUrl
+
+            }
+        })
+
+        res.render("../views/room-listing", {
+            rooms: rooms_data,
+            heading: "Regular Rooms"
+        });
+
+    })
+
+    .catch(err => console.log(`Error occured while displaying the data ${err}`))
+
 })
 
 router.post("/create_rooms", (req, res) => {
@@ -65,8 +94,8 @@ router.post("/create_rooms", (req, res) => {
 
     user.save()
         .then((user) => {
-            req.files.imageUrl.name = `hotel_pic_${user._id}${path.parse(req.files.imageUrl.name).ext}`;
-            req.files.imageUrl.mv(`/static/hotel_pics/${req.files.imageUrl.name}`)
+            req.files.imageUrl.name = `hotel_pics_${user._id}${path.parse(req.files.imageUrl.name).ext}`;
+            req.files.imageUrl.mv(`static/hotel_pics/${req.files.imageUrl.name}`)
                 .then(() => {
 
                     adminModel.updateOne({ _id: user._id }, {
@@ -74,7 +103,9 @@ router.post("/create_rooms", (req, res) => {
                     })
 
                     .then(() => {
-                        res.redirect(`//room-listing/hotel_pic/${user._id}`);
+                        // res.redirect(`//room-listing/hotel_pics/${user._id}`);
+                        res.redirect(`/room-listing`);
+
                     })
                 })
         })
@@ -117,7 +148,7 @@ router.get("/view_rooms", (req, res) => {
 
 // here I used Route to edit rooms
 
-router.get("/update_rooms/:id", LoggedIn, (req, res) => {
+router.get("/edit_rooms/:id", LoggedIn, (req, res) => {
 
     adminModel.findById(req.params.id)
 
