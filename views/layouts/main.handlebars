@@ -29,7 +29,6 @@
                 <li>
                     <a href="/room-listing">Explore Hotels</a>
                 </li>
-                <li><a href="/room-listing/create_rooms">Hotel Admin </a></li>
                  {{#if user }}
                  <a href="/logout">LogOut</a>
                   {{else}}
@@ -37,9 +36,10 @@
                     <a href="/userregistration">Register Now</a>
                 </li>
                 <li>
-                    <a href="/login">Log in</a>
+                    <a href="/login" id="user_login">Log in</a>
                 </li>
-                 
+                                 <li><a href="/room-listing/create_rooms">Hotel Admin </a></li>
+
             {{/if}}
                 {{!-- <li>
                     <a href="/featuredRooms">Featured Rooms</a>

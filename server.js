@@ -17,16 +17,6 @@ app.engine('handlebars', exphbs());
 app.set('view engine', 'handlebars');
 
 
-app.use(fileUpload());
-
-// Load the controllers 
-const generalController = require("./controllers/general")
-const roomsController = require("./controllers/room");
-
-//map controllers
-app.use("/", generalController);
-app.use("/room-listing", roomsController);
-
 //update and delete//
 app.use((req, res, next) => {
 
@@ -37,6 +27,7 @@ app.use((req, res, next) => {
     }
     next();
 })
+app.use(fileUpload());
 
 
 //handlebars middleware
@@ -59,6 +50,15 @@ app.use((req, res, next) => {
     res.locals.user = req.session.userInfo;
     next();
 })
+
+
+// Load the controllers 
+const generalController = require("./controllers/general")
+const roomsController = require("./controllers/room");
+
+//map controllers
+app.use("/", generalController);
+app.use("/room-listing", roomsController);
 
 
 //db conn

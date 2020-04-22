@@ -96,7 +96,7 @@ router.get("/userregistration", (req, res) => {
 });
 
 router.get("/dashboard", LoggedIn, AdminorUser, (req, res) => {
-    res.render("../views/dashboards/dashboard", {
+    res.render("/dashboard", {
         title: "Dashboard Page",
         headingInfo: "Dashboard Page",
     });
@@ -105,13 +105,13 @@ router.get("/dashboard", LoggedIn, AdminorUser, (req, res) => {
 // login validation
 router.post("/validation", (req, res) => {
 
-    userModel.findOne({ Email: req.body.email })
+    userModel.findOne({ email: req.body.email })
         .then(user => {
 
             const errors = [];
             if (user == null) {
-                errors.push("Sorry , you have entered invalid credentials!");
-                res.render("../views/login", {
+                errors.push("Sorry , your email and/or password is incorrect!");
+                res.render("/login", {
                     messages: errors
                 })
             } else {
@@ -240,7 +240,10 @@ router.post("/sendMessage", (req, res) => {
             })
             .then(message => {
                 console.log(message.sid);
-                res.render("home");
+                res.render("/dashboard", {
+                    name: `${req.body.Name}`
+                });
+                // res.render("home");
             })
             .catch((err) => {
                 console.log(`Error ${err}`);
