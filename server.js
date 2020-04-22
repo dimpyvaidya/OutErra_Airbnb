@@ -38,6 +38,16 @@ app.use((req, res, next) => {
     next();
 })
 
+
+//handlebars middleware
+// app.engine("handlebars", exphbs({
+//     helpers: {
+//         if_eq: function(location) {
+//             if()
+//         }
+//     }
+// }))
+
 app.use(session({
     secret: `${process.env.SECRET_KEY}`,
     resave: false,

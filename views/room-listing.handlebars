@@ -3,9 +3,9 @@
     <h2>Best hotels and accomodations in Canada</h2><br>
 </div>
 <div class="hotel-container">
-    {{#each rooms}}
+    {{#each room}}
         <section class="hotel_block "> 
-            <img src="/hotel_pics/{{imageUrl}}"  class="hotelimg " alt="hotelImg">
+            <img src="{{this.imageUrl}}"  class="hotelimg " alt="hotelImg">
             <div class="hotel_content">
                 <h2 class="hotelnm"><strong>{{this.title}}</strong></h2>
                 <h1 class="desc">{{this.description}}</h1>

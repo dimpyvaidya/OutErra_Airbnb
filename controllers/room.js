@@ -148,7 +148,8 @@ router.get("/view_rooms", (req, res) => {
 
 // here I used Route to edit rooms
 
-router.get("/edit_rooms/:id", LoggedIn, (req, res) => {
+// router.get("/edit_rooms/:id", LoggedIn, (req, res) => {
+router.get("/edit_rooms/:id", (req, res) => {
 
     adminModel.findById(req.params.id)
 
@@ -170,7 +171,7 @@ router.get("/edit_rooms/:id", LoggedIn, (req, res) => {
     .catch(err => console.log(`Error occured when pulling into the database ${err}`));
 })
 
-// Route to update Rooms 
+// Route to edit  Rooms 
 
 router.put("/editRoom/:id", (req, res) => {
 
@@ -194,7 +195,8 @@ router.put("/editRoom/:id", (req, res) => {
 
 // Route to delete rooms
 
-router.delete("/delete/:id", LoggedIn, (req, res) => {
+// router.delete("/delete/:id", LoggedIn, (req, res) => {
+router.delete("/delete/:id", (req, res) => {
 
     adminModel.deleteOne({ _id: req.params.id })
 

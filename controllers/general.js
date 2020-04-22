@@ -120,7 +120,7 @@ router.post("/validation", (req, res) => {
 
                         if (isMatched) {
                             req.session.userInfo = user;
-                            res.redirect("dashboard");
+                            res.redirect("/dashboard");
                         } else {
                             errors.push("Sorry , you have entered invalid credentials!");
                             res.render("../views/login", {
@@ -175,7 +175,7 @@ router.post("/sendMessage", (req, res) => {
     if (req.body.psw == "") {
         errors.push("Please enter a Password");
     } else if (req.body.psw.length < 4) {
-        errors.push("Sorry, you must enter a Password at least 8 characters ");
+        errors.push("Sorry, you must enter a Password at least 4 characters ");
     }
     if (req.body.psw != req.body.pswConfirm) {
         errors.push("Your password and confirm password must match!");
@@ -198,8 +198,7 @@ router.post("/sendMessage", (req, res) => {
             PostalCode: req.body.PostalCode,
             phoneNo: req.body.phoneNo,
             email: req.body.email,
-            psw: req.body.psw,
-            pswConfirm: req.body.pswConfirm
+            psw: req.body.psw
         }
 
         const user = new userModel(newUser);
@@ -207,6 +206,7 @@ router.post("/sendMessage", (req, res) => {
         user.save()
 
         .then(() => {
+            res.redirect("../views/dashboards/dashboard");
             console.log("User created in the database");
         })
 

@@ -37,10 +37,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    pswConfirm: {
-        type: String,
-        required: true
-    },
 
     type: {
         type: String,
@@ -51,10 +47,10 @@ userSchema.pre("save", function(next) {
 
     bcrypt.genSalt(10)
         .then((salt) => {
-            bcrypt.hash(this.Password, salt)
+            bcrypt.hash(this.psw, salt)
 
             .then((encryptedPassword) => {
-                this.Password = encryptedPassword;
+                this.psw = encryptedPassword;
                 next();
             })
         })
